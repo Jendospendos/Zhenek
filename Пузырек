@@ -1,34 +1,13 @@
-﻿int[] arr = { 5, 2, 10, 1, 13 };
-Console.WriteLine("Массив до сортировки:");
-PrintArray(arr);
-
-int n = arr.Length;
-bool swapped;
-for (int i = 0; i < n - 1; i++)
+public int[] SortArray() 
 {
-    swapped = false;
-    for (int j = 0; j < n - i - 1; j++)
-    {
-        if (arr[j] > arr[j + 1])
-        {
-            int temp = arr[j];
-            arr[j] = arr[j + 1];
-            arr[j + 1] = temp;
-            swapped = true;
-        }
-    }
-    if (!swapped)
-        break;
-}
-
-Console.WriteLine("Массив после сортировки:");
-PrintArray(arr);
-
-void PrintArray(int[] arr)
-{
-    foreach (int element in arr)
-    {
-        Console.Write(element + " ");
-    }
-    Console.WriteLine();
+    var n = NumArray.Length;
+    for (int i = 0; i < n - 1; i++)
+        for (int j = 0; j < n - i - 1; j++)
+            if (NumArray[j] > NumArray[j + 1])
+            {
+                var tempVar = NumArray[j];
+                NumArray[j] = NumArray[j + 1];
+                NumArray[j + 1] = tempVar;
+            }
+    return NumArray;
 }
