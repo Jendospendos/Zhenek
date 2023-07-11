@@ -1,0 +1,58 @@
+CREATE
+create table CUSTOMER (
+	CustomerID int identity(1, 1) not null constraint PK_Customer primary key,
+  Name nvarchar(25) not null,
+	LastName nvarchar(25) not null
+)
+create table Shops (
+  ProductID: INT int identity(1, 1) not null constraint  ProductID INT primary key,
+	PriceID: INT: INT nvarchar(10) not null,
+	ShopsID: INT nvarchar(10) not null,
+)
+create table Product (
+	 ProductID: int identity(1, 1) not null constraint  ProductID primary key,
+ShopsID int not null constraint FK_Shops references Shops(ShopsID)
+		on delete cascade
+		on update cascade,
+	CustomerID: int not null constraint FK_Customer references Customer(CustomerID)
+		on delete cascade
+		on update cascade
+)
+INSERT
+insert into CUSTOMER (CustomerID, Name, LastName)
+values
+	(N'1', N'Иван', N'Кузнецов''),
+	(N'2', N'Евгений', N'Козырев'),
+	(N'3', N'Максим', N'Лаптев'),
+	(N'4', N'Артем', N'Стругацкий'),
+	(N'5', N'Дмитрий', N'Ларионов'),
+insert into Shops (PriceID,  ProductID, ShopsID)
+values
+	(N'10', N'2', N'22'),
+	(N'11', N'6', N'33'),
+	(N'12', N'8', N'44'),
+	(N'13', N'7', N'55'),
+	(N'14', N'9', N'66')
+insert into Reception (ProductID, ShopsID, CustomerID)
+values
+	(2, 22, 1),
+	(6, 33, 2),
+	(7, 44, 3),
+	(8, 55, 4),
+	(9, 66, 5)
+select Name, LastName, CustomerID from Customer
+select  ProductID, PriceID from Shops where ShopsID = N'33'
+select ProductID, ShopsIr from Reception where CustomerID > 3
+select
+	CUSTOMER,
+	count(ShopsID) as ShopsCount
+from Product
+group by CUSTOMERID
+select * from CUSTOME order by Name
+select top 5 * from Product
+select
+	CUSTOMER,
+	count(ShopsID) as ShopsCount
+from Product
+group by CUSTOMERID
+having count(ShopsId) = 2
