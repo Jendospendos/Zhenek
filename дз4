@@ -1,0 +1,179 @@
+﻿using Core.Models;
+using DatabaseProvider;
+using DatabaseProvider.Repositories.Abstractions;
+using DatabaseProvider.Repositories.Implementations;
+using System.Numerics;
+using System;
+
+namespace ShopsDb
+{
+    public class Program
+    {
+        private const string connectionString =
+                "Data Source=WIN-26JB6NF31I0\\SQLEXPRESS01;Initial Catalog=CarMechanicDb;TrustServerCertificate=True;Pooling=true;Integrated Security=SSPI";
+        private static ApplicationContext _applicationContext;
+        private static IShopsRepository _shopsRepository;
+        private static IpriceRepository _priceRepository;
+        private static IproductRepository _productMechanicRepository;
+        public static void Main(string[] args)
+        {
+            _applicationContext = new ApplicationContext(connectionString);
+            _shopsRepository = new ShopsRepository(_applicationContext);
+            _clientRepository = new clientRepository(_applicationContext);
+            _productRepository = new productRepository(_applicationContext);
+            PrintCommandsList();
+            ProcessComands();
+        }
+        static void PrintCommandsList()
+        {
+            Console.WriteLine("Available commands:");
+            Console.WriteLine("\tadd-shops [shopsID] [priceID] [productID]");
+            Console.WriteLine("\tremove-shops [shopsID]");
+            Console.WriteLine("\tadd-CUSTOMER [Name] [LastName]");
+            Console.WriteLine("\tremove-CUSTOMER [CUSTOMERId]");
+            Console.WriteLine("\tadd-Productc [ProductId] [ShopsId] ");
+            Console.WriteLine("\tremove-Product [ProductcId]");
+            Console.WriteLine("\tlist-Productc");
+            Console.WriteLine("\tlist-CUSTOMER");
+            Console.WriteLine("\tlist-shops");
+            Console.WriteLine("\texit");
+        }
+        static void ProcessComands()
+        {
+            while (true)
+            {
+                Console.Write("Enter command: ");
+                string[] commandLine = Console.ReadLine()!.Split(' ');
+                string command = commandLine[0];
+                List<string> parameters = commandLine.Skip(1).ToList();
+                switch (command)
+                {
+                    case "exit":
+                        return;
+                    case "add-shops":
+                        Addshops(parameters);
+                        break;
+                    case "remove-shops":
+                        Removeshops(parameters);
+                        break;
+                    case "add-CUSTOMER":
+                        AddCUSTOMER(parameters);
+                        break;
+                    case "remove-CUSTOMER":
+                        RemoveCUSTOMER(parameters);
+                        break;
+                    case "add-Product":
+                        AddProduct(parameters);
+                        break;
+                    case "remove-Product":
+                        RemoveProduct(parameters);
+                        break;
+                    case "list-cars":
+                        ListCars();
+                        break;
+                    case "list-clients":
+                        ListClients();
+                        break;
+                    case "list-Product":
+                        Product();
+                        break;
+
+                }
+            }
+        }
+        static void AddShops(List<string> parameters)
+        {
+            Shops Shops = new()
+            {
+                ProductId = parameters[0],
+                price = int.Parse(parameters[1]),
+                ShopsID = parameters[2]
+            };
+            _ShopsRepository?.Add(Shops);
+            _ShopsRepository?.SaveChanges();
+        }
+        static void RemoveShops(List<string> parameters)
+        {
+            int ShopsId = int.Parse(parameters[0]);
+            Shops? Shops = _ShopsRepository.GetById(ShopsId);
+            if (Shops != null)
+            {
+                _ShopsRepository.Remove(Shops);
+                _ShopsRepository.SaveChanges();
+            }
+        }
+        static void AddCUSTOMER(List<string> parameters)
+        {
+            CUSTOMER CUSTOMER = new()
+            {
+                CUSTOMERName = parameters[0],
+                CUSTOMERtLastName = parameters[1]
+            };
+            _CUSTOMERRepository.Add(CUSTOMER);
+            _CUSTOMERRepository.SaveChanges();
+        }
+        static void RemoveCUSTOMER(List<string> parameters)
+        {
+            int CUSTOMERId = int.Parse(parameters[0]);
+            CUSTOMER? CUSTOMERt = _CUSTOMERRepository.GetById(CUSTOMERId);
+            if (CUSTOMERt != null)
+            {
+                _CUSTOMERRepository.Remove(CUSTOMER);
+                _CUSTOMERRepository.SaveChanges();
+            }
+        }
+        static void AddProduct(List<string> parameters)
+        {
+            int repairCost = int.Parse(parameters[0]);
+            int ShopsId = int.Parse(parameters[1]);
+            int CUSTOMERId = int.Parse(parameters[2]);
+            Shops? Shops = _ShopsRepository.GetById(ShopsId);
+           CUSTOMER? CUSTOMER = _CUSTOMERRepository.GetById(CUSTOMERId);
+            if (CUSTOMER != null &&  Shops != null)
+            {
+               Product Product = new()
+                {
+                    price = price,
+                    ShopsId = ShopsId,
+                    Shops = Shops,
+                    CUSTOMERId = CUSTOMERId,
+                    CUSTOMER = CUSTOMER
+                };
+                _ProductRepository.Add(Product);
+                _ProductRepository.SaveChanges();
+            }
+        }
+        static void RemoveProduct(List<string> parameters)
+        {
+            int receptionId = int.Parse(parameters[0]);
+            Product? reception = _ProductRepository.GetById(receptionId);
+            if (reception != null)
+            {
+                _Product.Remove(reception);
+                _ProductRepository.SaveChanges();
+            }   
+        }
+        static void ListCars()
+        {
+            _ShopsRepository.GetAll().ForEach((Shops) => Console.WriteLine(Shop));
+        }
+        static void ListClients()
+        {
+            _CUSTOMERRepository.GetAll().ForEach((CUSTOMER) => Console.WriteLine(CUSTOMER));
+        }
+        static void ListCarMechanics()
+        {
+            _ProductRepository.GetAll().ForEach((Product) => Console.WriteLine(Product));
+        }
+        static void ListCarMechanicsByCar(List<string> parameters)
+        {
+            int carId = int.Parse(parameters[0]);
+            _ProductRepository.GetByCarId(carId).ForEach((Product) => Console.WriteLine(Product));
+        }
+        static void ListProduct (List<string> parameters)
+        {
+            int CUSTOMERId = int.Parse(parameters[0]);
+            _ProductRepository.GetByCUSTOMERId(CUSTOMERId).ForEach((Product) => Console.WriteLine(Product));
+        }
+    }
+}
