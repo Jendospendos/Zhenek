@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>TLHomeWork_6</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="section">
+        <div class="TopArea">
+          <div class="SelectArea">
+            <form name="EazySelect" class="FormSelection">
+              <select name="EazyMethod" class="Selection">
+                <option value="getAll">GET ALL</option>
+                <option value="getById">GET</option>
+                <option value="deleteById">DELETE</option>
+            </select>
+            </form>
+          </div>
+          <div class = "InputArea">
+            <form name="InputRoute" class="FormInputRoute">
+              <input type="text" name="Route" id="RouteEazy" placeholder="http://localhost:5140/users">
+            </form>
+          </div>
+          <div class = "ButtonArea">
+            <button class="ButtonStyle" id="doActionEazy">SEND</button>
+          </div>
+        </div>
+        <div class="BottomArea">
+          <div class="ResponseArea">
+            <textarea class="textarea" id="TA_EazyResponse" placeholder="Response"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="TopArea">
+          <div class="SelectArea">
+            <form name="HardSelect" class="FormSelection">
+              <select name="HardMethod" class="Selection">
+                <option value="post">POST</option>
+                <option value="put">PUT</option>
+            </select>
+            </form>
+          </div>
+          <div class = "InputArea">
+            <form name="InputRout" class="FormInputRoute">
+              <input type="text" name="Route" id="RouteHard" placeholder="http://localhost:5140/users">
+            </form>
+          </div>
+          <div class = "ButtonArea">
+            <button class="ButtonStyle" id="doActionHard">SEND</button>
+          </div>
+        </div>
+        <div class="BottomArea">
+          <div class="BigInputArea">
+            <textarea class="textarea" id="TA_sendRequset" placeholder="Requset"></textarea>
+          </div>
+          <div class="ResponseArea">
+            <textarea class="textarea" id="TA_HardResponse" placeholder="Response"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
