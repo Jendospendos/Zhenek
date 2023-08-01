@@ -1,0 +1,27 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData[ "Title" ] = "Home page";
+}
+
+<div class="text-start">
+    <h1 class="display-4 title">Calculator</h1>
+    <form method="post" class="form">
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="firstNumber" name="firstNumber"/>
+            <label for="firstNumber">First Number</label>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-select" id="operation" name="operation">
+                <option value="addition">+</option>
+                <option value="subtraction">-</option>
+            </select>
+            <label for="operation">Arithmetic Operation</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="secondNumber" name="secondNumber"/>
+            <label for="secondNumber">Second Number</label>
+        </div>
+        <button type="submit" class="btn btn-primary">=</button>
+    </form>
+</div>

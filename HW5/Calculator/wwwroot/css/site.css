@@ -1,0 +1,65 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.title {
+    text-align: center;
+}
+
+.second-number {
+    border-bottom: 1px solid black;
+    text-align: right;
+}
+
+.first-number {
+    text-align: right;
+}
+
+.column-calculations {
+    display: flex;
+    margin: 0 auto;
+}
+
+.operation {
+    padding-top: 47px;
+}
+
+.result {
+    text-align: right;
+}
+
+.residue {
+    text-align: right;
+    font: 400 normal 35px/40px monospace;
+}
+.all {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font: 400 normal 35px/40px monospace;
+    width: 380px;
+    background-image: url("../img/tetr.png")
+
+}
+.button {
+    color:cornflowerblue;
+}
+.form {
+    width: 500px;
+    margin: 0 auto;
+}

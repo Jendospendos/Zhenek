@@ -1,0 +1,150 @@
+﻿@page
+@model Calculator.Pages.ResultModel
+@{
+    ViewData[ "Title" ] = "Result";
+}
+
+@{
+    char[] residue = new char[Model.SecondNumber.Length];
+    residue[0] = ' ';
+    if (Model.Operation == "addition")
+    {
+
+        
+        char[] FirstNumberArray = Model.FirstNumber.ToCharArray();
+
+        for (int i = 0; i < Model.FirstNumber.Length / 2; i++)
+        {
+            char temp = FirstNumberArray[i];
+            FirstNumberArray[i] = FirstNumberArray[Model.FirstNumber.Length - 1 - i];
+            FirstNumberArray[Model.FirstNumber.Length - 1 - i] = temp;
+        }
+
+        char[] SecondNumberArray = Model.SecondNumber.ToCharArray();
+
+        for (int i = 0; i < Model.SecondNumber.Length / 2; i++)
+        {
+            char temp = SecondNumberArray[i];
+            SecondNumberArray[i] = SecondNumberArray[Model.SecondNumber.Length - 1 - i];
+            SecondNumberArray[Model.SecondNumber.Length - 1 - i] = temp;
+        }
+        int[] sumArray = new int[FirstNumberArray.Length];
+        for (int i = 0; i < Model.SecondNumber.Length - 1; i++)
+        {
+            bool ItsOverTen = false;
+            int firstNumber = int.Parse(FirstNumberArray[i].ToString());
+            int secondNumber = int.Parse(SecondNumberArray[i].ToString());
+            sumArray[i] = firstNumber + secondNumber;
+            if (ItsOverTen)
+            {
+                sumArray[i]++;
+            }
+            if (sumArray[i] >= 10)
+            {
+                ItsOverTen = true;
+                residue[i + 1] = '1';
+            }
+            else
+            {
+                residue[i + 1] = ' ';
+            }
+        }
+        
+    }
+
+    if (Model.Operation == "subtraction")
+    {
+        string[] FirstNumberArray = new string[Model.FirstNumber.Length];
+
+        for (int i = 0; i < Model.FirstNumber.Length; i++)
+        {
+            FirstNumberArray[i] = Model.FirstNumber[i].ToString();
+        }
+
+        for (int i = 0; i < Model.FirstNumber.Length / 2; i++)
+        {
+            string temp = FirstNumberArray[i];
+            FirstNumberArray[i] = FirstNumberArray[Model.FirstNumber.Length - 1 - i];
+            FirstNumberArray[Model.FirstNumber.Length - 1 - i] = temp;
+        }
+
+         string[] SecondNumberArray = new string[Model.SecondNumber.Length];
+
+         for (int i = 0; i < Model.SecondNumber.Length; i++)
+         {
+            SecondNumberArray[i] = Model.SecondNumber[i].ToString();
+         }
+
+         for (int i = 0; i < Model.SecondNumber.Length / 2; i++)
+         {
+             string temp = SecondNumberArray[i];
+             SecondNumberArray[i] = SecondNumberArray[Model.SecondNumber.Length - 1 - i];
+             SecondNumberArray[Model.SecondNumber.Length - 1 - i] = temp;
+         }
+        int[] diffArray = new int[FirstNumberArray.Length];
+        for (int i = 0; i < Model.SecondNumber.Length - 1; i++)
+        {
+            bool ItsOverTen = false;
+            int firstNumber = int.Parse(FirstNumberArray[i]);
+            int secondNumber = int.Parse(SecondNumberArray[i]);
+            diffArray[i] = firstNumber - secondNumber;
+            if (ItsOverTen)
+            {
+                diffArray[i]--;
+            }
+            if (diffArray[i] < 0)
+            {
+                ItsOverTen = true;
+                residue[i + 1] = '.';
+            }
+            else
+            {
+                residue[i + 1] = ' ';
+            }
+        }
+    }
+    for (int i = 0; i < residue.Length / 2; i++)
+    {
+        char temp = residue[i];
+        residue[i] = residue[residue.Length - 1 - i];
+        residue[residue.Length - 1 - i] = temp;
+    }
+
+    string residueResult = new string(residue);
+}
+<div class="all">
+
+
+<div class="column-calculations">
+    <div class="operation">
+        @switch ( Model.Operation )
+        {
+             case "addition":
+                 <span>+</span>
+                 break;
+             case "subtraction":
+                 <span>-</span>
+                 break;
+             default:
+                 <span />
+                 break;
+        }
+    </div>
+    <table>
+        <tr>
+                <td class="residue">@residueResult&nbsp</td>
+            </tr>
+        <tr>
+            <td class="first-number">@Model.FirstNumber</td>
+        </tr>
+        <tr>
+            <td class="second-number">@Model.SecondNumber</td>
+        </tr>
+        <tr>
+            <td class="result">@Model.Result</td>
+        </tr>
+    </table>
+</div>
+</div>
+
+
